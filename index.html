@@ -18,8 +18,8 @@
 
 .container {
     display: flex;
-    width: 80%;
-    height: 80%;
+    width: 500px; /* Fixed width for the calculator */
+    height: 500px;
     background: #222;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0,0,0,0.5);
@@ -43,6 +43,11 @@
     font-family: 'Courier New', Courier, monospace;
     font-size: 24px;
     color: #00f;
+    transition: color 0.3s;
+}
+
+.retro-text:hover {
+    color: #aaf;
 }
 
 .info {
@@ -71,11 +76,13 @@
     font-family: 'Courier New', Courier, monospace;
     font-size: 48px;
     background: #000;
-    color: #0f0;
+    color: #fff;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
     text-align: right;
+    filter: blur(0px); /* Default no blur */
+    transition: color 0.3s, filter 0.3s;
 }
 
 .buttons {
@@ -91,7 +98,7 @@ button {
     padding: 20px;
     font-size: 18px;
     cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
+    transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
 }
 
 button:hover {
@@ -100,6 +107,13 @@ button:hover {
 
 button:active {
     transform: scale(0.95);
+}
+
+/* Glowing effect when 6969 is pressed */
+.glow {
+    color: #ff0;
+    box-shadow: 0 0 10px #ff0;
+    filter: blur(2px);
 }
 
     </style>
@@ -142,6 +156,7 @@ button:active {
     <script>
     let display = document.getElementById('led-display');
 let currentInput = '';
+let hueChanging = false;
 
 function appendNumber(number) {
     currentInput += number;
@@ -171,47 +186,46 @@ function updateDisplay() {
     display.textContent = currentInput || '0';
 }
 
-// Animation for hue change
-let colors = ['red', 'yellow', 'orange', 'green', 'cyan', 'blue', 'magenta'];
-let colorIndex = 0;
-setInterval(() => {
-    document.querySelectorAll('.led-display').forEach(el => {
-        el.style.color = colors[colorIndex];
-    });
-    colorIndex = (colorIndex + 1) % colors.length;
-}, 1000);
+// Animation for hue change when 6969 is input
+function startHueChange() {
+    let colors = ['red', 'yellow', 'orange', 'green', 'cyan', 'blue', 'magenta'];
+    let colorIndex = 0;
+    setInterval(() => {
+        if (hueChanging) {
+            display.style.color = colors[colorIndex];
+            colorIndex = (colorIndex + 1) % colors.length;
+        }
+    }, 1000);
+}
 
-// Special secret displays
+// Check for special input and handle them
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-        if (currentInput === '6969') {
-            document.querySelectorAll('.led-display').forEach(el => {
-                el.textContent = 'Hue changing every 1s!';
-            });
-        } else if (currentInput === '453') {
-            document.querySelectorAll('.led-display').forEach(el => {
-                el.textContent = 'He wouldn\'t die, would he?';
-            });
-        } else if (currentInput === '454') {
-            document.querySelectorAll('.led-display').forEach(el => {
-                el.textContent = 'I do not know, sir';
-            });
-        } else if (currentInput === '455') {
-            document.querySelectorAll('.led-display').forEach(el => {
-                el.textContent = 'Wherefore do you not know.';
-            });
-        } else if (currentInput === '456') {
-            document.querySelectorAll('.led-display').forEach(el => {
-                el.textContent = 'He seems to be working on some device called calculator, they work maths on it';
-            });
-        } else if (currentInput === '457') {
-            document.querySelectorAll('.led-display').forEach(el => {
-                el.textContent = 'Oh to complicate life, these humans do';
-            });
-        } else if (currentInput === '456') {
-            document.querySelectorAll('.led-display').forEach(el => {
-                el.textContent = 'Find other repo to see what happens';
-            });
+        switch (currentInput.trim()) {
+            case '6969':
+                hueChanging = true;
+                display.classList.add('glow');
+                display.textContent = 'Hue changing every 1s!';
+                startHueChange();
+                break;
+            case '453':
+                display.textContent = 'He wouldn\'t die, would he?';
+                break;
+            case '454':
+                display.textContent = 'I do not know, sir';
+                break;
+            case '455':
+                display.textContent = 'Wherefore do you not know.';
+                break;
+            case '456':
+                display.textContent = 'He seems to be working on some device called calculator, they work maths on it';
+                break;
+            case '457':
+                display.textContent = 'Oh to complicate life, these humans do';
+                break;
+            default:
+                display.textContent = 'Invalid input or no special message for this input.';
+                break;
         }
         currentInput = '';
         setTimeout(clearDisplay, 3000); // Clear the display after 3 seconds
