@@ -12,17 +12,21 @@
     align-items: center;
     height: 100vh;
     margin: 0;
-    background: #333;
+    background: url('https://i.pinimg.com/originals/1d/dd/6e/1ddd6efe88fcda4ec251aa080b6ee0ec.gif') no-repeat center center fixed;
+    background-size: cover;
     color: #fff;
 }
 
 .container {
     display: flex;
-    width: 500px; /* Fixed width for the calculator */
+    width: 500px; 
+    max-width: 650px;
     height: 500px;
-    background: #222;
+    max-height: 650px;
+    background: rgba(34, 34, 34, 0.9); /* Slightly transparent background */
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px); /* Add blur effect to the container */
 }
 
 .sidebar {
@@ -81,7 +85,7 @@
     border-radius: 10px;
     margin-bottom: 20px;
     text-align: right;
-    filter: blur(0px); /* Default no blur */
+    filter: blur(1px); /* Default no blur */
     transition: color 0.3s, filter 0.3s;
 }
 
@@ -92,29 +96,39 @@
 }
 
 button {
-    background: rgba(17, 17, 17, 0.8); /* Translucent background */
-    color: #0f0;
-    border: none;
+    background: rgba(255, 255, 255, 0.1); /* Translucent background */
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
     padding: 20px;
     font-size: 18px;
     cursor: pointer;
     transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Glitchy effect */
+button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgb(68,68,68);
+    opacity: 0.6;
+    filter: blur(5px);
+    transform: skew(-10deg, -10deg);
+    transition: opacity 0.3s;
+}
+
+/* Hover effect for buttons */
+button:hover::before {
+    opacity: 1;
 }
 
 button:hover {
-    background: rgba(33, 33, 33, 0.8); /* Slightly lighter translucent background */
-}
-
-button:active {
-    transform: scale(0.95);
-}
-
-/* Glowing effect when 6969 is pressed */
-.glow {
-    color: #ff0;
-    box-shadow: 0 0 10px #ff0;
-    filter: blur(2px);
+    background: rgba(255, 255, 255, 0.3);
 }
 
 /* Bounce animation for the '=' button */
