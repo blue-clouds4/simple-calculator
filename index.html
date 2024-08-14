@@ -3,225 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animated Calculator</title>
+    <title>Interactive Calculator</title>
     <style>
     body {
-    margin: 0;
-    font-family: 'Courier New', Courier, monospace;
-    background-color: #2e2e2e;
-    color: white;
+    font-family: 'Arial', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin: 0;
+    background: #333;
+    color: #fff;
 }
 
 .container {
     display: flex;
     width: 80%;
-    max-width: 1200px;
     height: 80%;
+    background: #222;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
-.sidebar-left, .sidebar-right {
-    width: 20%;
+.sidebar {
+    flex: 1;
     padding: 20px;
+    overflow: auto;
 }
 
-.sidebar-left {
-    background-color: #3a3a3a;
-    color: #f0f0f0;
+.left {
+    border-right: 2px solid #444;
 }
 
-.sidebar-right {
-    background-color: #3a3a3a;
+.right {
+    border-left: 2px solid #444;
 }
 
-.retro-console {
+.retro-text {
     font-family: 'Courier New', Courier, monospace;
-    font-size: 20px;
-    color: #00ff00;
-    white-space: pre;
+    font-size: 24px;
+    color: #00f;
 }
 
-.links a {
-    color: #1e90ff;
+.info {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.info a {
+    color: #0f0;
+    text-decoration: none;
+}
+
+.info a:hover {
+    text-decoration: underline;
 }
 
 .calculator {
-    width: 60%;
-    background-color: #4b0082;
+    flex: 3;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .led-display {
     font-family: 'Courier New', Courier, monospace;
-    font-size: 36px;
-    color: #00ff00;
-    background-color: #000;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
+    font-size: 48px;
+    background: #000;
+    color: #0f0;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
     text-align: right;
-    height: 60px;
-    line-height: 60px;
 }
 
 .buttons {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
 }
 
 button {
-    background-color: #6a0dad;
+    background: #111;
+    color: #0f0;
     border: none;
-    color: white;
-    font-size: 20px;
     padding: 20px;
-    border-radius: 5px;
+    font-size: 18px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background 0.3s, transform 0.3s;
 }
 
 button:hover {
-    background-color: #8a2be2;
+    background: #333;
 }
 
 button:active {
-    background-color: #5a1f9a;
-}
-
-@keyframes hueAnimation {
-    0% { filter: hue-rotate(0deg); }
-    100% { filter: hue-rotate(360deg); }
-}
-
-.led-display {
-    animation: hueAnimation 1s infinite;
+    transform: scale(0.95);
 }
 
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="sidebar-left">
-            <pre class="retro-console">BLUE_</pre>
-            <div class="links">
-                <p>Follow me on <a href="https://github.com/yourusername" target="_blank">GitHub</a></p>
-                <p>Repo: <a href="https://github.com/yourusername/repo" target="_blank">GitHub Repo</a></p>
-            </div>
+        <div class="sidebar left">
+            <p class="retro-text">BLUE_</p>
+            <p class="info">Follow me on GitHub</p>
+            <p class="info"><a href="https://github.com/your-repo">Repo of this project</a></p>
         </div>
-        
         <div class="calculator">
-            <div id="display" class="led-display">0</div>
+            <div id="led-display" class="led-display">0</div>
             <div class="buttons">
-                <button onclick="appendNumber(1)">1</button>
-                <button onclick="appendNumber(2)">2</button>
-                <button onclick="appendNumber(3)">3</button>
-                <button onclick="appendNumber(4)">4</button>
-                <button onclick="appendNumber(5)">5</button>
-                <button onclick="appendNumber(6)">6</button>
-                <button onclick="appendNumber(7)">7</button>
-                <button onclick="appendNumber(8)">8</button>
-                <button onclick="appendNumber(9)">9</button>
-                <button onclick="appendNumber(0)">0</button>
+                <button onclick="appendNumber('1')">1</button>
+                <button onclick="appendNumber('2')">2</button>
+                <button onclick="appendNumber('3')">3</button>
+                <button onclick="appendNumber('4')">4</button>
+                <button onclick="appendNumber('5')">5</button>
+                <button onclick="appendNumber('6')">6</button>
+                <button onclick="appendNumber('7')">7</button>
+                <button onclick="appendNumber('8')">8</button>
+                <button onclick="appendNumber('9')">9</button>
+                <button onclick="appendNumber('0')">0</button>
                 <button onclick="calculate()">=</button>
+                <button onclick="appendOperator('+')">+</button>
+                <button onclick="appendOperator('-')">-</button>
+                <button onclick="appendOperator('*')">*</button>
+                <button onclick="appendOperator('/')">/</button>
                 <button onclick="clearDisplay()">C</button>
             </div>
         </div>
-        
-        <div class="sidebar-right">
-            <h2>How it works</h2>
-            <p>The calculator performs basic arithmetic operations.</p>
-            <p>Use the buttons to input numbers and operations.</p>
+        <div class="sidebar right">
+            <p class="info">How the calculator works:</p>
+            <p class="info">1. Click on buttons to enter numbers and operators.</p>
+            <p class="info">2. Press '=' to see the result.</p>
+            <p class="info">3. Press 'C' to clear the display.</p>
         </div>
     </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animated Calculator</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="container">
-        <div class="sidebar-left">
-            <pre class="retro-console">BLUE_</pre>
-            <div class="links">
-                <p>Follow me on <a href="https://github.com/yourusername" target="_blank">GitHub</a></p>
-                <p>Repo: <a href="https://github.com/yourusername/repo" target="_blank">GitHub Repo</a></p>
-            </div>
-        </div>
-        
-        <div class="calculator">
-            <div id="display" class="led-display">0</div>
-            <div class="buttons">
-                <button onclick="appendNumber(1)">1</button>
-                <button onclick="appendNumber(2)">2</button>
-                <button onclick="appendNumber(3)">3</button>
-                <button onclick="appendNumber(4)">4</button>
-                <button onclick="appendNumber(5)">5</button>
-                <button onclick="appendNumber(6)">6</button>
-                <button onclick="appendNumber(7)">7</button>
-                <button onclick="appendNumber(8)">8</button>
-                <button onclick="appendNumber(9)">9</button>
-                <button onclick="appendNumber(0)">0</button>
-                <button onclick="calculate()">=</button>
-                <button onclick="clearDisplay()">C</button>
-            </div>
-        </div>
-        
-        <div class="sidebar-right">
-            <h2>How it works</h2>
-            <p>The calculator performs basic arithmetic operations.</p>
-            <p>Use the buttons to input numbers and operations.</p>
-        </div>
-    </div>
-
     <script>
-    let display = document.getElementById('display');
-let input = '';
+    let display = document.getElementById('led-display');
+let currentInput = '';
 
 function appendNumber(number) {
-    input += number;
-    updateDisplay(input);
+    currentInput += number;
+    updateDisplay();
+}
+
+function appendOperator(operator) {
+    currentInput += ' ' + operator + ' ';
+    updateDisplay();
 }
 
 function calculate() {
     try {
-        let result = eval(input);
-        if (input === '6969') {
-            display.innerHTML = 'Changing hue...';
-        } else if (input === '453') {
-            display.innerHTML = 'he wouldn\'t die would he?';
-        } else if (input === '454') {
-            display.innerHTML = 'i do not know sir';
-        } else {
-            updateDisplay(result);
-        }
+        display.textContent = eval(currentInput);
+        currentInput = display.textContent;
     } catch (e) {
-        display.innerHTML = 'Error';
+        display.textContent = 'Error';
     }
-    input = '';
 }
 
 function clearDisplay() {
-    input = '';
-    updateDisplay('0');
+    currentInput = '';
+    display.textContent = '0';
 }
 
-function updateDisplay(value) {
-    display.innerHTML = value;
+function updateDisplay() {
+    display.textContent = currentInput || '0';
 }
+
+// Animation for hue change
+let colors = ['red', 'yellow', 'orange', 'green', 'cyan', 'blue', 'magenta'];
+let colorIndex = 0;
+setInterval(() => {
+    document.querySelectorAll('.led-display').forEach(el => {
+        el.style.color = colors[colorIndex];
+    });
+    colorIndex = (colorIndex + 1) % colors.length;
+}, 1000);
+
+// Special secret displays
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        if (currentInput === '6969') {
+            document.querySelectorAll('.led-display').forEach(el => {
+                el.textContent = 'Hue changing every 1s!';
+            });
+        } else if (currentInput === '453') {
+            document.querySelectorAll('.led-display').forEach(el => {
+                el.textContent = 'He wouldn\'t die, would he?';
+            });
+        } else if (currentInput === '454') {
+            document.querySelectorAll('.led-display').forEach(el => {
+                el.textContent = 'I do not know, sir';
+            });
+        } else if (currentInput === '455') {
+            document.querySelectorAll('.led-display').forEach(el => {
+                el.textContent = 'Wherefore do you not know.';
+            });
+        } else if (currentInput === '456') {
+            document.querySelectorAll('.led-display').forEach(el => {
+                el.textContent = 'He seems to be working on some device called calculator, they work maths on it';
+            });
+        } else if (currentInput === '457') {
+            document.querySelectorAll('.led-display').forEach(el => {
+                el.textContent = 'Oh to complicate life, these humans do';
+            });
+        } else if (currentInput === '456') {
+            document.querySelectorAll('.led-display').forEach(el => {
+                el.textContent = 'Find other repo to see what happens';
+            });
+        }
+        currentInput = '';
+        setTimeout(clearDisplay, 3000); // Clear the display after 3 seconds
+    }
+});
 
     </script>
 </body>
